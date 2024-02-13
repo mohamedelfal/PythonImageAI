@@ -1,0 +1,31 @@
+name: Train AI Model
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+          cache: 'pip'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          cache-dependency-path: ./.cache/pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Train model
+        run: python App/simple_ai_model.py
+
+      - name: Save trained model
+        run: mv trained_model.h5 App/models/trained_model.h5
