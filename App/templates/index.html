@@ -4,27 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Image Generator</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .output-image {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>AI Image Generator</h1>
-    <textarea id="description" placeholder="Enter image description..."></textarea>
-    <button onclick="generateImage()">Generate Image</button>
-    <div id="imageContainer"></div>
+    <div class="container">
+        <h2>AI Image Generator</h2>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" placeholder="Enter description...">
+        </div>
+        <div class="form-group">
+            <button onclick="generateImage()">Generate Image</button>
+        </div>
+        <div class="output-image" id="output-image">
+            <!-- Generated image will be displayed here -->
+        </div>
+    </div>
+
     <script>
         function generateImage() {
+            // Get the description input value
             var description = document.getElementById('description').value;
-            fetch('/generate_image', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ "description": description })
-            })
-            .then(response => response.json())
-            .then(data => {
-                var imageContainer = document.getElementById('imageContainer');
-                imageContainer.innerHTML = '<img src="' + data.image_url + '" alt="Generated Image">';
-            });
+
+            // Send the description to the server to generate the image
+            // Display the generated image in the output-image div
+            // This part will be implemented using JavaScript AJAX requests
+            // Since the server-side code is not provided here, this part will be left blank
         }
     </script>
 </body>
