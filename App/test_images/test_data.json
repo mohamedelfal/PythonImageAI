@@ -1,0 +1,24 @@
+{
+  "images": [
+    {
+      "filename": "image1.jpg",
+      "description": "A woman smiling"
+    },
+    {
+      "filename": "image2.jpg",
+      "description": "A woman standing"
+    },
+    {
+      "filename": "image3.jpg",
+      "description": "A woman holding a book"
+    },
+    {
+      "filename": "image4.jpg",
+      "description": "A woman with glasses"
+    },
+    {
+      "filename": "image5.jpg",
+      "description": "A woman with long hair"
+    }
+  ]
+}
