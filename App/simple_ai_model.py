@@ -48,6 +48,11 @@ model.compile(optimizer='adam',
 # تدريب النموذج
 model.fit(images, np.array(range(len(descriptions))), epochs=10)
 
+# حفظ النموذج بعد التدريب
+model_dir = "App/models"  # مسار المجلد الذي تم إنشاؤه لحفظ النماذج
+model_filename = "trained_model.h5"
+model.save(os.path.join(model_dir, model_filename))
+
 # توليد الصور من الوصف
 def generate_image(description):
     descriptions_mapping = {"A black square": 0, "A white square": 1, "A white circle": 2, "A black circle": 3}
@@ -59,3 +64,4 @@ def generate_image(description):
 # استخدام النموذج لتوليد صورة
 description = "A black square"  # يمكن استبدالها بأي وصف من بيانات الوصف
 generated_image = generate_image(description)
+
