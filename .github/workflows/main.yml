@@ -3,7 +3,7 @@ name: Train AI Model
 on:
   push:
     branches:
-      - master  # اسم الفرع الرئيسي في مستودعك
+      - master
 
 jobs:
   build:
@@ -16,16 +16,15 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.9'
+        python-version: '3.x'
         architecture: 'x64'
+        cache: 'pip'
 
     - name: Upgrade pip
-      run: |
-        python -m pip install --upgrade pip
+      run: python -m pip install --upgrade pip
 
     - name: Install dependencies
-      run: |
-        python -m pip install -r requirements.txt
+      run: python -m pip install -r requirements.txt
 
     - name: Run training script
       run: python simple_ai_model.py
