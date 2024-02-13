@@ -1,0 +1,11 @@
+[
+  {
+    "image_name": "image1.jpg",
+    "description": "A black square"
+  },
+  {
+    "image_name": "image2.jpg",
+    "description": "A white circle"
+  },
+  ...
+]
