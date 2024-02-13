@@ -1,21 +1,34 @@
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
+import os
+import json
+from PIL import Image
 
-# مثال بسيط لتدريب النموذج على صور مع الأوصاف
-# سيتم استخدام مصفوفة بسيطة لتمثيل الصور
+# قراءة بيانات الصور من مجلد الصور
+def read_images(folder_path):
+    images = []
+    for filename in os.listdir(folder_path):
+        if filename.endswith(".jpeg"):  # التأكد من أن الملف هو بامتداد .jpeg
+            image_path = os.path.join(folder_path, filename)
+            image = np.array(Image.open(image_path))
+            images.append(image)
+    return np.array(images)
 
-# بيانات الصور
-images = np.array([
-    [0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 0],
-    [0, 1, 0, 1, 0],
-    [0, 1, 1, 1, 0],
-    [0, 0, 0, 0, 0],
-])
+# قراءة بيانات الوصف من ملف JSON
+def read_descriptions(json_path):
+    with open(json_path) as json_file:
+        data = json.load(json_file)
+    descriptions = []
+    for item in data:
+        descriptions.append(item["description"])
+    return descriptions
 
-# بيانات الأوصاف المطابقة لكل صورة
-descriptions = ["A black square", "A white square", "A white circle", "A black circle"]
+# تحميل البيانات
+images_folder = "images"
+json_file = os.path.join("data", "data.json")  # توجيه إلى مجلد البيانات
+images = read_images(images_folder)
+descriptions = read_descriptions(json_file)
 
 # بناء النموذج
 model = keras.Sequential([
@@ -25,7 +38,6 @@ model = keras.Sequential([
 ])
 
 # تجهيز البيانات
-images = images.reshape(-1, 5, 5)  # إعادة تشكيل الصور
 images = images.astype('float32')  # تحويل القيم إلى أعداد عشرية
 
 # تجهيز النموذج
@@ -34,7 +46,7 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 # تدريب النموذج
-model.fit(images, np.array([0, 1, 2, 3]), epochs=10)
+model.fit(images, np.array(range(len(descriptions))), epochs=10)
 
 # توليد الصور من الوصف
 def generate_image(description):
@@ -45,5 +57,5 @@ def generate_image(description):
     return generated_image
 
 # استخدام النموذج لتوليد صورة
-description = "A black square"
+description = "A black square"  # يمكن استبدالها بأي وصف من بيانات الوصف
 generated_image = generate_image(description)
