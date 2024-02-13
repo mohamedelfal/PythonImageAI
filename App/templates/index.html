@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator</title>
+</head>
+<body>
+    <h1>AI Image Generator</h1>
+    <textarea id="description" placeholder="Enter image description..."></textarea>
+    <button onclick="generateImage()">Generate Image</button>
+    <div id="imageContainer"></div>
+    <script>
+        function generateImage() {
+            var description = document.getElementById('description').value;
+            fetch('/generate_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "description": description })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var imageContainer = document.getElementById('imageContainer');
+                imageContainer.innerHTML = '<img src="' + data.image_url + '" alt="Generated Image">';
+            });
+        }
+    </script>
+</body>
+</html>
