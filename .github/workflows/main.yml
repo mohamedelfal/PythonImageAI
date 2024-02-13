@@ -6,41 +6,26 @@ on:
       - master
 
 jobs:
-  build:
+  train:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
       
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-        architecture: 'x64'
-        cache: 'pip'
-        token: ${{ secrets.GITHUB_TOKEN }}
-        cache-dependency-path: ~/.cache/pip
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+          cache: 'pip'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          cache-dependency-path: ./.cache/pip
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-    - name: Train model
-      run: python simple_ai_model.py
+      - name: Train model
+        run: python App/simple_ai_model.py
 
-    - name: Save trained model
-      run: mv trained_model.h5 App/models/trained_model.h5
-
-    - name: Generate test image
-      run: python generate_test_image.py
-
-    - name: Save test image
-      run: mv generated_image.png App/images/generated_image.png
-
-    - name: Commit and push changes
-      run: |
-        git config --global user.email "action@github.com"
-        git config --global user.name "GitHub Action"
-        git add .
-        git commit -m "Update trained model and test image [skip ci]"
-        git push
+      - name: Save trained model
+        run: mv trained_model.h5 App/models/trained_model.h5
